@@ -1,6 +1,8 @@
 ## Czech Holidays
 Lightweight .NET library for generating Czech public holidays for any calendar year without external APIs or stored year tables.
 
+![](https://github.com/ondrejsvorc/CzechHolidays/blob/main/icon.png)
+
 The library distinguishes between:
 - **Fixed holidays** – same date every year
 - **Movable holidays** – derived from Easter (Good Friday, Easter Monday)
