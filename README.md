@@ -1,12 +1,11 @@
 ## Czech Holidays
-.NET library for generating Czech public holidays for any year without external APIs.
+Lightweight .NET library for generating Czech public holidays for any calendar year without external APIs or stored year tables.
 
 The library distinguishes between:
-- **fixed holidays** – same date every year
-- **movable holidays** – derived from Easter (Good Friday, Easter Monday)
+- **Fixed holidays** – same date every year
+- **Movable holidays** – derived from Easter (Good Friday, Easter Monday)
 
 Movable holidays are calculated algorithmically from Easter Sunday using the Meeus/Jones/Butcher algorithm.
-No holiday tables are stored for specific years.
 
 ### Fixed Holidays
 | Date | Holiday |
@@ -23,11 +22,40 @@ No holiday tables are stored for specific years.
 | Dec 25 | Christmas Day |
 | Dec 26 | St. Stephen’s Day |
 
+### Movable Holidays
+| Date | Holiday |
+|------:|--------|
+| Differs each year | Good Friday |
+| Differs each year | Easter Monday |
+
 ### Scope
-- Czech Republic only
-- public holidays only
-- no religious or informal calendar days
+- Czech public holidays only
+- No holiday names in the API
+
+The API intentionally exposes **dates only**.
 
 ### Usage
-The library returns **dates only** (`DateTime`).
-Holiday names are intentionally excluded from the API.
+
+#### Create Czech Holidays for a Year
+```csharp
+ICzechHolidaysFactory holidaysFactory = new CzechHolidaysFactory();
+CzechHolidays holidays2025 = holidaysFactory.Create(year: 2025);
+```
+
+#### Determine Whether a Date Is a Czech Public Holiday (DateOnly)
+```csharp
+ICzechHolidaysFactory holidaysFactory = new CzechHolidaysFactory();
+CzechHolidays holidays2025 = holidaysFactory.Create(year: 2025);
+
+DateOnly newYearDate = new(year: 2025, month: 1, day: 1);
+bool isHoliday = holidays2025.Contains(newYearDate); // true
+```
+
+#### Determine Whether a Date Is a Czech Public Holiday (DateTime)
+```csharp
+ICzechHolidaysFactory holidaysFactory = new CzechHolidaysFactory();
+CzechHolidays holidays2025 = holidaysFactory.Create(year: 2025);
+
+DateTime newYearDate = new(year: 2025, month: 1, day: 1);
+bool isHoliday = holidays2025.Contains(newYearDate); // true
+```
