@@ -4,6 +4,23 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	  <PackageId>CzechHolidays</PackageId>
+	  <Version>1.0.0</Version>
+	  <Authors>Ondrej Svorc</Authors>
+	  <Description>Lightweight .NET library for generating Czech public holidays for any calendar year without external APIs or stored year tables.</Description>
+	  <RepositoryUrl>https://github.com/ondrejsvorc/CzechHolidays</RepositoryUrl>
+	  <RepositoryType>git</RepositoryType>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageTags>czech;holidays;public-holidays;calendar;dateonly;datetime;dotnet</PackageTags>
+	  <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+	  <None Include="..\..\icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
 </Project>

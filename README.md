@@ -39,13 +39,13 @@ The API intentionally exposes **dates only**.
 #### Create Czech Holidays for a Year
 ```csharp
 ICzechHolidaysFactory holidaysFactory = new CzechHolidaysFactory();
-CzechHolidays holidays2025 = holidaysFactory.Create(year: 2025);
+CzechHolidaysYear holidays2025 = holidaysFactory.Create(year: 2025);
 ```
 
 #### Determine Whether a Date Is a Czech Public Holiday (DateOnly)
 ```csharp
 ICzechHolidaysFactory holidaysFactory = new CzechHolidaysFactory();
-CzechHolidays holidays2025 = holidaysFactory.Create(year: 2025);
+CzechHolidaysYear holidays2025 = holidaysFactory.Create(year: 2025);
 
 DateOnly newYearDate = new(year: 2025, month: 1, day: 1);
 bool isHoliday = holidays2025.Contains(newYearDate); // true
@@ -54,7 +54,7 @@ bool isHoliday = holidays2025.Contains(newYearDate); // true
 #### Determine Whether a Date Is a Czech Public Holiday (DateTime)
 ```csharp
 ICzechHolidaysFactory holidaysFactory = new CzechHolidaysFactory();
-CzechHolidays holidays2025 = holidaysFactory.Create(year: 2025);
+CzechHolidaysYear holidays2025 = holidaysFactory.Create(year: 2025);
 
 DateTime newYearDate = new(year: 2025, month: 1, day: 1);
 bool isHoliday = holidays2025.Contains(newYearDate); // true
