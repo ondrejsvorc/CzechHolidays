@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/CzechHolidays.Tests/CzechHolidays.Tests.csproj" />
+  <Project Path="src/CzechHolidays/CzechHolidays.csproj" />
+</Solution>
