@@ -8,13 +8,13 @@ namespace CzechHolidays;
 /// <remarks>
 /// All holidays are guaranteed to belong to the year specified by <see cref="Year"/>.
 /// </remarks>
-public sealed class CzechHolidays
+public sealed class CzechHolidaysYear
 {
     public int Year { get; }
 
     private readonly FrozenSet<DateOnly> _holidays;
 
-    public CzechHolidays(int year, IEnumerable<DateOnly> holidays)
+    public CzechHolidaysYear(int year, IEnumerable<DateOnly> holidays)
     {
         DateOnly[] holidayArray = [.. holidays];
 

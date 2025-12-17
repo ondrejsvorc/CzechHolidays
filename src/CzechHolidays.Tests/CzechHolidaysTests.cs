@@ -8,7 +8,7 @@ public sealed class CzechHolidaysTests
     [MemberData(nameof(TestData))]
     public void IsHoliday_ReturnsTrue_ForAllExpectedHolidays(int year, DateOnly[] expectedHolidays)
     {
-        CzechHolidays holidays = holidaysFactory.Create(year);
+        CzechHolidaysYear holidays = holidaysFactory.Create(year);
 
         foreach (DateOnly holiday in expectedHolidays)
         {

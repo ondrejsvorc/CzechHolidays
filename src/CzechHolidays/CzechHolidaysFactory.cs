@@ -2,7 +2,7 @@
 
 public sealed class CzechHolidaysFactory : ICzechHolidaysFactory
 {
-    public CzechHolidays Create(int year) => new(year, [.. GetFixedHolidays(year), .. GetEasterHolidays(year)]);
+    public CzechHolidaysYear Create(int year) => new(year, [.. GetFixedHolidays(year), .. GetEasterHolidays(year)]);
 
     /// <summary>
     /// https://www.mpsv.cz/zakon-c.-245-2000-sb.-ze-dne-29.-cervna-2000-
