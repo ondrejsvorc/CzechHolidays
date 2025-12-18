@@ -16,15 +16,8 @@ public sealed class CzechHolidaysYear
 
     public CzechHolidaysYear(int year, IEnumerable<DateOnly> holidays)
     {
-        DateOnly[] holidayArray = [.. holidays];
-
-        if (holidayArray.Any(holiday => holiday.Year != year))
-        {
-            throw new ArgumentException($"All holidays must belong to year: {year}.", nameof(holidays));
-        }
-
         Year = year;
-        _holidays = holidayArray.ToFrozenSet();
+        _holidays = holidays.ToFrozenSet();
     }
 
     public bool Contains(DateOnly date) => _holidays.Contains(date);
