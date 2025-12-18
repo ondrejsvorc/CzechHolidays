@@ -2,7 +2,11 @@
 
 public sealed class CzechHolidaysFactory : ICzechHolidaysFactory
 {
-    public CzechHolidaysYear Create(int year) => new(year, [.. GetFixedHolidays(year), .. GetEasterHolidays(year)]);
+    public CzechHolidaysYear Create(int year)
+    {
+        EnsureSupportedYear(year);
+        return new(year, [.. GetFixedHolidays(year), .. GetEasterHolidays(year)]);
+    }
 
     /// <summary>
     /// https://www.mpsv.cz/zakon-c.-245-2000-sb.-ze-dne-29.-cervna-2000-
@@ -59,5 +63,16 @@ public sealed class CzechHolidaysFactory : ICzechHolidaysFactory
         int day = ((h + l - (7 * m) + 114) % 31) + 1;
 
         return new(year, month, day);
+    }
+
+    private static void EnsureSupportedYear(int year)
+    {
+        int minYear = DateOnly.MinValue.Year;
+        int maxYear = DateOnly.MaxValue.Year;
+
+        if (year < minYear || year > maxYear)
+        {
+            throw new ArgumentOutOfRangeException(nameof(year), year, $"Year must be in range {minYear}–{maxYear}.");
+        }
     }
 }
