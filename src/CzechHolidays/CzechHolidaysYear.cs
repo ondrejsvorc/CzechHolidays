@@ -14,7 +14,7 @@ public sealed class CzechHolidaysYear
 
     private readonly FrozenSet<DateOnly> _holidays;
 
-    public CzechHolidaysYear(int year, IEnumerable<DateOnly> holidays)
+    internal CzechHolidaysYear(int year, IEnumerable<DateOnly> holidays)
     {
         Year = year;
         _holidays = holidays.ToFrozenSet();
