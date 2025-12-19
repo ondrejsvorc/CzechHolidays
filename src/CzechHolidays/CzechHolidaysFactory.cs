@@ -2,44 +2,69 @@
 
 public sealed class CzechHolidaysFactory : ICzechHolidaysFactory
 {
-    public CzechHolidaysYear Create(int year)
+    public IReadOnlyList<CzechHolidayDate> Create(int year)
     {
         EnsureSupportedYear(year);
-        return new(year, [.. GetFixedHolidays(year), .. GetEasterHolidays(year)]);
+
+        List<CzechHolidayDate> holidays = [.. GetFixedHolidays(year)];
+
+        foreach (CzechHolidayDate easterHoliday in GetEasterHolidays(year))
+        {
+            InsertSorted(holidays, easterHoliday);
+        }
+
+        return holidays;
+    }
+
+    private static void EnsureSupportedYear(int year)
+    {
+        int minYear = DateOnly.MinValue.Year;
+        int maxYear = DateOnly.MaxValue.Year;
+
+        if (year < minYear || year > maxYear)
+        {
+            throw new ArgumentOutOfRangeException(nameof(year), year, $"Year must be in range {minYear}–{maxYear}.");
+        }
+    }
+
+    private static void InsertSorted(List<CzechHolidayDate> holidays, CzechHolidayDate holiday)
+    {
+        int index = holidays.BinarySearch(holiday, new CzechHolidayDateComparer());
+        if (index < 0)
+        {
+            holidays.Insert(~index, holiday);
+        }
     }
 
     /// <summary>
     /// https://www.mpsv.cz/zakon-c.-245-2000-sb.-ze-dne-29.-cervna-2000-
     /// </summary>
-    private static IEnumerable<DateOnly> GetFixedHolidays(int year)
+    private static IEnumerable<CzechHolidayDate> GetFixedHolidays(int year)
     {
-        yield return new(year, 1, 1);
-        yield return new(year, 5, 1);
-        yield return new(year, 5, 8);
-        yield return new(year, 7, 5);
-        yield return new(year, 7, 6);
-        yield return new(year, 9, 28);
-        yield return new(year, 10, 28);
-        yield return new(year, 11, 17);
-        yield return new(year, 12, 24);
-        yield return new(year, 12, 25);
-        yield return new(year, 12, 26);
+        yield return new(new DateOnly(year, 1, 1), CzechHoliday.NewYear);
+        yield return new(new DateOnly(year, 5, 1), CzechHoliday.LabourDay);
+        yield return new(new DateOnly(year, 5, 8), CzechHoliday.VictoryDay);
+        yield return new(new DateOnly(year, 7, 5), CzechHoliday.CyrilAndMethodius);
+        yield return new(new DateOnly(year, 7, 6), CzechHoliday.JanHus);
+        yield return new(new DateOnly(year, 9, 28), CzechHoliday.StWenceslas);
+        yield return new(new DateOnly(year, 10, 28), CzechHoliday.IndependentStateDay);
+        yield return new(new DateOnly(year, 11, 17), CzechHoliday.StruggleForFreedomAndDemocracy);
+        yield return new(new DateOnly(year, 12, 24), CzechHoliday.ChristmasEve);
+        yield return new(new DateOnly(year, 12, 25), CzechHoliday.ChristmasDay);
+        yield return new(new DateOnly(year, 12, 26), CzechHoliday.StStephensDay);
     }
 
-    private static IEnumerable<DateOnly> GetEasterHolidays(int year)
+    private static IEnumerable<CzechHolidayDate> GetEasterHolidays(int year)
     {
         DateOnly easterSunday = GetEasterSunday(year);
-
-        static DateOnly GetGoodFriday(DateOnly easterSunday) => easterSunday.AddDays(-2);
-        static DateOnly GetEasterMonday(DateOnly easterSunday) => easterSunday.AddDays(1);
 
         const int GoodFridayFirstObservedYear = 2016;
         if (year >= GoodFridayFirstObservedYear)
         {
-            yield return GetGoodFriday(easterSunday);
+            yield return new(easterSunday.AddDays(-2), CzechHoliday.GoodFriday);
         }
 
-        yield return GetEasterMonday(easterSunday);
+        yield return new(easterSunday.AddDays(1), CzechHoliday.EasterMonday);
     }
 
     /// <summary>
@@ -63,16 +88,5 @@ public sealed class CzechHolidaysFactory : ICzechHolidaysFactory
         int day = ((h + l - (7 * m) + 114) % 31) + 1;
 
         return new(year, month, day);
-    }
-
-    private static void EnsureSupportedYear(int year)
-    {
-        int minYear = DateOnly.MinValue.Year;
-        int maxYear = DateOnly.MaxValue.Year;
-
-        if (year < minYear || year > maxYear)
-        {
-            throw new ArgumentOutOfRangeException(nameof(year), year, $"Year must be in range {minYear}–{maxYear}.");
-        }
     }
 }

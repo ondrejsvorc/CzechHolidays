@@ -32,7 +32,7 @@ Movable holidays are calculated algorithmically from Easter Sunday using the Mee
 
 ### Scope
 - Czech public holidays only
-- No holiday names in the API
+- Holiday names available in Czech, English, and German
 
 The API intentionally exposes **dates only**.
 
@@ -41,23 +41,28 @@ The API intentionally exposes **dates only**.
 #### Create Czech Holidays for a Year
 ```csharp
 ICzechHolidaysFactory holidaysFactory = new CzechHolidaysFactory();
-CzechHolidaysYear holidays2025 = holidaysFactory.Create(year: 2025);
+IReadOnlyList<CzechHolidayDate> holidays2025 = holidaysFactory.Create(year: 2025);
 ```
 
-#### Determine Whether a Date Is a Czech Public Holiday (DateOnly)
+#### Determine Whether a Date Is a Czech Public Holiday In a Specific Year
 ```csharp
-ICzechHolidaysFactory holidaysFactory = new CzechHolidaysFactory();
-CzechHolidaysYear holidays2025 = holidaysFactory.Create(year: 2025);
+ICzechHolidaysFactory factory = new CzechHolidaysFactory();
+IReadOnlyList<CzechHolidayDate> holidays2025 = factory.Create(2025);
 
-DateOnly newYearDate = new(year: 2025, month: 1, day: 1);
-bool isHoliday = holidays2025.Contains(newYearDate); // true
+bool isHoliday = holidays2025.Any(holiday => holiday.Date == new DateOnly(2025, 1, 1)); // true
 ```
 
-#### Determine Whether a Date Is a Czech Public Holiday (DateTime)
+### Get Holiday Names
 ```csharp
-ICzechHolidaysFactory holidaysFactory = new CzechHolidaysFactory();
-CzechHolidaysYear holidays2025 = holidaysFactory.Create(year: 2025);
+string newYearCzechName = CzechHolidayNames.GetName(CzechHoliday.NewYear, CzechHolidayLanguage.Czech);
+string newYearEnglishName = CzechHolidayNames.GetName(CzechHoliday.NewYear, CzechHolidayLanguage.English);
+string newYearGermanName = CzechHolidayNames.GetName(CzechHoliday.NewYear, CzechHolidayLanguage.German);
+```
 
-DateTime newYearDate = new(year: 2025, month: 1, day: 1);
-bool isHoliday = holidays2025.Contains(newYearDate); // true
+```csharp
+ICzechHolidaysFactory factory = new CzechHolidaysFactory();
+IReadOnlyList<CzechHolidayDate> holidays2025 = factory.Create(2025);
+
+CzechHolidayDate holiday = holidays2025.First();
+string czechName = CzechHolidayNames.GetName(holiday.Holiday, CzechHolidayLanguage.Czech);
 ```
