@@ -34,8 +34,6 @@ Movable holidays are calculated algorithmically from Easter Sunday using the Mee
 - Czech public holidays only
 - Holiday names available in Czech, English, and German
 
-The API intentionally exposes **dates only**.
-
 ### Usage
 
 #### Create Czech Holidays for a Year
