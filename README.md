@@ -1,6 +1,10 @@
 ## Czech Holidays
 Lightweight .NET library for generating Czech public holidays for any calendar year without external APIs or stored year tables.
 
+![NuGet Downloads](https://img.shields.io/nuget/dt/CzechHolidays)
+![NuGet Version](https://img.shields.io/nuget/v/CzechHolidays)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ondrejsvorc/CzechHolidays/ci.yml)
+
 ![](https://raw.githubusercontent.com/ondrejsvorc/CzechHolidays/main/icon.png)
 
 The library distinguishes between:
