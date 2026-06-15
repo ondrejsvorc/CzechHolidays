@@ -1,5 +1,5 @@
 ## Czech Holidays
-Lightweight .NET library for generating Czech public holidays for any calendar year without external APIs or stored year tables.
+Lightweight .NET library for generating Czech public holidays from 2016 onward without external APIs or stored year tables.
 
 ![NuGet Downloads](https://img.shields.io/nuget/dt/CzechHolidays)
 ![NuGet Version](https://img.shields.io/nuget/v/CzechHolidays)
@@ -36,6 +36,8 @@ Movable holidays are calculated algorithmically from Easter Sunday using the Mee
 
 ### Scope
 - Czech public holidays only
+- Years 2016 and later
+- Future years assume the current holiday law remains unchanged
 - Holiday names available in Czech, English, and German
 
 ### Usage

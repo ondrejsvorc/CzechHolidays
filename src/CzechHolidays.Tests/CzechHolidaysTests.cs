@@ -15,8 +15,6 @@ public sealed class CzechHolidaysTests
         {
             Assert.True(holidays.Any(holiday => holiday == expectedHoliday), $"Expected {expectedHoliday:yyyy-MM-dd} to be a holiday in {year}");
         }
-
-        CzechHolidayNames.GetName(CzechHoliday.NewYear, CzechHolidayLanguage.Czech);
     }
 
     [Theory]
@@ -30,6 +28,19 @@ public sealed class CzechHolidaysTests
         DateOnly[] ordered = dates.Order().ToArray();
 
         Assert.Equal(ordered, dates);
+    }
+
+    [Fact]
+    public void Create_SupportsCurrentHolidaySetFrom2016()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => holidaysFactory.Create(2015));
+
+        CzechHoliday[] holidays = holidaysFactory.Create(2016)
+            .Select(holiday => holiday.Holiday)
+            .Order()
+            .ToArray();
+
+        Assert.Equal(Enum.GetValues<CzechHoliday>(), holidays);
     }
 
     [Fact]

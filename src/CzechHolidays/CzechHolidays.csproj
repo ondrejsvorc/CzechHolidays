@@ -7,7 +7,7 @@
 	  <PackageId>CzechHolidays</PackageId>
 	  <Version>1.0.1</Version>
 	  <Authors>Ondrej Svorc</Authors>
-	  <Description>Lightweight .NET library for generating Czech public holidays for any calendar year without external APIs or stored year tables.</Description>
+	  <Description>Lightweight .NET library for generating Czech public holidays from 2016 onward without external APIs or stored year tables.</Description>
 	  <RepositoryUrl>https://github.com/ondrejsvorc/CzechHolidays</RepositoryUrl>
 	  <RepositoryType>git</RepositoryType>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>

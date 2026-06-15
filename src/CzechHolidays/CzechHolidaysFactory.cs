@@ -2,38 +2,22 @@
 
 public sealed class CzechHolidaysFactory : ICzechHolidaysFactory
 {
+    private const int MinimumSupportedYear = 2016;
+
     public IReadOnlyList<CzechHolidayDate> Create(int year)
     {
         EnsureSupportedYear(year);
 
-        List<CzechHolidayDate> holidays = [.. GetFixedHolidays(year)];
-
-        foreach (CzechHolidayDate easterHoliday in GetEasterHolidays(year))
-        {
-            InsertSorted(holidays, easterHoliday);
-        }
+        List<CzechHolidayDate> holidays = [.. GetFixedHolidays(year), .. GetEasterHolidays(year)];
+        holidays.Sort(static (x, y) => x.Date.CompareTo(y.Date));
 
         return holidays;
     }
 
     private static void EnsureSupportedYear(int year)
     {
-        int minYear = DateOnly.MinValue.Year;
-        int maxYear = DateOnly.MaxValue.Year;
-
-        if (year < minYear || year > maxYear)
-        {
-            throw new ArgumentOutOfRangeException(nameof(year), year, $"Year must be in range {minYear}–{maxYear}.");
-        }
-    }
-
-    private static void InsertSorted(List<CzechHolidayDate> holidays, CzechHolidayDate holiday)
-    {
-        int index = holidays.BinarySearch(holiday, new CzechHolidayDateComparer());
-        if (index < 0)
-        {
-            holidays.Insert(~index, holiday);
-        }
+        ArgumentOutOfRangeException.ThrowIfLessThan(year, MinimumSupportedYear);
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(year, DateOnly.MaxValue.Year);
     }
 
     /// <summary>
@@ -58,12 +42,7 @@ public sealed class CzechHolidaysFactory : ICzechHolidaysFactory
     {
         DateOnly easterSunday = GetEasterSunday(year);
 
-        const int GoodFridayFirstObservedYear = 2016;
-        if (year >= GoodFridayFirstObservedYear)
-        {
-            yield return new(easterSunday.AddDays(-2), CzechHoliday.GoodFriday);
-        }
-
+        yield return new(easterSunday.AddDays(-2), CzechHoliday.GoodFriday);
         yield return new(easterSunday.AddDays(1), CzechHoliday.EasterMonday);
     }
 
